@@ -1,4 +1,6 @@
 #include<iostream>
+#include "Pokemonclass.h"
+#include"Fight.h"
 #include<fstream>
 #include<vector>
 #include<string>
@@ -507,4 +509,3 @@ int main()
         }
     }
     return 0;
-}

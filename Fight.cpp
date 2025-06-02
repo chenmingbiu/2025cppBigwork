@@ -8,6 +8,7 @@
 using namespace std;
 
 void Fight_Start(string name) {
+	cout << "请选择要出战的宝可梦：" << endl;
 
 }
 

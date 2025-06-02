@@ -3,6 +3,8 @@
 #include <cmath>
 #include <iostream>
 #include <cstdlib>
+#include <vector>
+#include <memory>
 using namespace std;
 
 struct Skill{
@@ -46,6 +48,7 @@ public:
 	void DAGmaker(int DAG) { HP -= DAG; if (HP < 0)HP = 0; }	//伤害施加函数
 	void HPadder(int HPadd) { HP += HPadd; if (HP > HPmax)HP = HPmax; }	//生命值回复函数
 	Skill SkillSelector(int num) { return skill[num - 1]; }
+	int GetPokemonType() { return num; }	//获取宝可梦的种类编号
 	void InfoDisplayer() {	//宝可梦基本信息查看函数
 		cout << "等级：" << level << endl;
 		cout << "经验值：" << EXP << endl;
@@ -315,3 +318,29 @@ Marshtomp::Marshtomp(int EXP) {
 	AttributeRestorer();
 	Skillmaker();
 	num = 10;
+}
+
+unique_ptr<Pokemon> MultiPokemonCreater(int num, int EXP) {
+	switch (num)
+	{
+	case 1: return make_unique<Scizor>(EXP);
+	case 2: return make_unique<Metang>(EXP);
+	case 3: return make_unique<Sceptile>(EXP);
+	case 4: return make_unique<Venusaur>(EXP);
+	case 5: return make_unique<Gyarados>(EXP);
+	case 6: return make_unique<Kingdra>(EXP);
+	case 7: return make_unique<Arcanine>(EXP);
+	case 8: return make_unique<Magmortar>(EXP);
+	case 9: return make_unique<Donphan>(EXP);
+	case 10: return make_unique<Marshtomp>(EXP);
+	default: return nullptr;
+		break;
+	}
+}
+vector<unique_ptr<Pokemon>> createPokemonTeam() {
+	vector<unique_ptr<Pokemon>> team(6);
+	//根据选择的宝可梦编号读取对应的数据（待完成）
+	team.push_back(MultiPokemonCreater(1, 50));
+
+	return team;
+}
