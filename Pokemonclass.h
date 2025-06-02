@@ -28,10 +28,7 @@ protected:
     int HPmax;
     int MPmax;
     double DOD;
-<<<<<<< HEAD
-=======
     int num;
->>>>>>> 新增文件添加项目文件�?
     Skill skill[6];
 
     void AttributeMaker(int EXP);

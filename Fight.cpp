@@ -1,11 +1,4 @@
-<<<<<<< HEAD
-#include "Pokemonclass.h"
-#include "Fight.h"
-#include<string>
-#include<cmath>
-#include<iostream>
 
-=======
 #include "Pokemonclass.h"
 #include "Fight.h"
 #include <cstdlib>
@@ -18,10 +11,10 @@ void Fight_Start(string name) {
 
 }
 
-int Fight_During(Pokemon& Mine,Pokemon& Enemy){
+int Fight_During(Pokemon& Mine, Pokemon& Enemy) {
 	int selection = 0;
 	Skill skill_mine = { 0 }, skill_enemy = { 0 };
-	FightDuring_Start:
+FightDuring_Start:
 	system("cls");
 	cout << "1. 攻击技能" << endl;
 	cout << "2. 防御技能" << endl;
@@ -33,14 +26,13 @@ int Fight_During(Pokemon& Mine,Pokemon& Enemy){
 	cin >> selection;
 	switch (selection)
 	{
-		case 1:; break;
-		case 2:; break;
-		case 3:; break;
-		case 4:; break;
-		case 5:; break;
-		case 6:; break;
-		default:cout << "请输入正确的操作数字！" << endl; goto FightDuring_Start;
+	case 1:; break;
+	case 2:; break;
+	case 3:; break;
+	case 4:; break;
+	case 5:; break;
+	case 6:; break;
+	default:cout << "请输入正确的操作数字！" << endl; goto FightDuring_Start;
 	}
 	return int(0);
 }
->>>>>>> 鏂板鏂囦欢娣诲姞椤圭洰鏂囦欢銆?
