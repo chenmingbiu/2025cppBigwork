@@ -1,10 +1,12 @@
-#include<iostream>
-#include "Pokemonclass.h"
-#include"Fight.h"
+#include"Pokemonclass.h"
 #include<fstream>
 #include<vector>
-#include<string>
+#include<cstring>
 #include<cctype>
+#include<random>
+#include<ctime>
+#include<iostream>
+#include<algorithm>
 using namespace std;
 
 class item
@@ -12,9 +14,15 @@ class item
 public:
     int id;
     int price;
-    string name;
-    string describe;
-    item(int a,string b,int c,string d):id(a),name(b),price(c),describe(d){}
+    char name[30]={0};
+    char describe[1000]={0};
+    item(int a,char* b,int c,char* d):id(a),price(c)
+    {
+        strncpy(name,b,29);
+        name[29]='\0';
+        strncpy(describe,d,999);
+        describe[999]='\0';
+    }
     virtual void showitem(){};
 };
 
@@ -25,7 +33,7 @@ class restore_item:public item
 public:
     int effect;
     
-    restore_item(int a,string b,int c,string d,int e):item(a,b,c,d),effect(e){}
+    restore_item(int a,char* b,int c,char* d,int e):item(a,b,c,d),effect(e){}
 
     void showitem()
     {
@@ -40,7 +48,7 @@ class non_restore_item:public item
 public:
     int success;
 
-    non_restore_item(int a,string b,int c,string d,int e):item(a,b,c,d),success(e){}
+    non_restore_item(int a,char* b,int c,char* d,int e):item(a,b,c,d),success(e){}
     
     void showitem()
     {
@@ -54,27 +62,18 @@ public:
     vector<int> amounts={1000,3,2,1,3,2,1,3,2,1};
     item* itemlist[10]=
     {
-    new restore_item(1000,"½ğ±Ò",0,"¸÷¸ö´óÂ½µÄÁ÷Í¨»õ±Ò",0),
-    new restore_item(1001,"Ğ¡ÑªÆ¿",30,"Ğ¡ĞÍµÄÑªÁ¿»Ø¸´Ò©£¬¿ÉÒÔ»Ö¸´50µãÑªÁ¿",50),
-    new restore_item(1002,"ÖĞÑªÆ¿",50,"ÖĞĞÍµÄÑªÁ¿»Ø¸´Ò©£¬¿ÉÒÔ»Ö¸´50µãÑªÁ¿",100),
-    new restore_item(1003,"ÖĞÑªÆ¿",70,"´óĞÍµÄÑªÁ¿»Ø¸´Ò©£¬¿ÉÒÔ»Ö¸´150µãÑªÁ¿",150),
-    new restore_item(1004,"Ğ¡À¶Æ¿",30,"Ğ¡ĞÍµÄÄ§Á¦»Ø¸´Ò©£¬¿ÉÒÔ»Ö¸´50µãÄ§Á¦",50),
-    new restore_item(1005,"ÖĞÀ¶Æ¿",50,"ÖĞĞÍµÄÄ§Á¦»Ø¸´Ò©£¬¿ÉÒÔ»Ö¸´50µãÄ§Á¦",100),
-    new restore_item(1006,"´óÀ¶Æ¿",70,"´óĞÍµÄÄ§Á¦»Ø¸´Ò©£¬¿ÉÒÔ»Ö¸´150µãÄ§Á¦",150),
-    new non_restore_item(1007,"»ù´¡¾«ÁéÇò",100,"×îµÍ¼¶µÄ¾«ÁéÇò£¬Ğ¡¸ÅÂÊ²¶×½µ½¾«Áé",20),
-    new non_restore_item(1008,"½ø½×¾«ÁéÇò",200,"½ø½×µÄ¾«ÁéÇò£¬´ó¸ÅÂÊ²¶×½µ½¾«Áé",50),
-    new non_restore_item(1009,"´óÊ¦¾«ÁéÇò",300,"×î¸ß¼¶µÄ¾«ÁéÇò£¬±Ø¶¨²¶×½µ½¾«Áé",100)
+    new restore_item(1000,"é‡‘å¸",0,"å„ä¸ªå¤§é™†çš„æµé€šè´§å¸",0),
+    new restore_item(1001,"å°è¡€ç“¶",30,"å°å‹çš„è¡€é‡å›å¤è¯ï¼Œå¯ä»¥æ¢å¤50ç‚¹è¡€é‡",50),
+    new restore_item(1002,"ä¸­è¡€ç“¶",50,"ä¸­å‹çš„è¡€é‡å›å¤è¯ï¼Œå¯ä»¥æ¢å¤50ç‚¹è¡€é‡",100),
+    new restore_item(1003,"ä¸­è¡€ç“¶",70,"å¤§å‹çš„è¡€é‡å›å¤è¯ï¼Œå¯ä»¥æ¢å¤150ç‚¹è¡€é‡",150),
+    new restore_item(1004,"å°è“ç“¶",30,"å°å‹çš„é­”åŠ›å›å¤è¯ï¼Œå¯ä»¥æ¢å¤50ç‚¹é­”åŠ›",50),
+    new restore_item(1005,"ä¸­è“ç“¶",50,"ä¸­å‹çš„é­”åŠ›å›å¤è¯ï¼Œå¯ä»¥æ¢å¤50ç‚¹é­”åŠ›",100),
+    new restore_item(1006,"å¤§è“ç“¶",70,"å¤§å‹çš„é­”åŠ›å›å¤è¯ï¼Œå¯ä»¥æ¢å¤150ç‚¹é­”åŠ›",150),
+    new non_restore_item(1007,"åŸºç¡€ç²¾çµçƒ",100,"æœ€ä½çº§çš„ç²¾çµçƒï¼Œå°æ¦‚ç‡æ•æ‰åˆ°ç²¾çµ",20),
+    new non_restore_item(1008,"è¿›é˜¶ç²¾çµçƒ",200,"è¿›é˜¶çš„ç²¾çµçƒï¼Œå¤§æ¦‚ç‡æ•æ‰åˆ°ç²¾çµ",50),
+    new non_restore_item(1009,"å¤§å¸ˆç²¾çµçƒ",300,"æœ€é«˜çº§çš„ç²¾çµçƒï¼Œå¿…å®šæ•æ‰åˆ°ç²¾çµ",100)
     };
-    // restore_item gold=restore_item(1000,"½ğ±Ò","¸÷¸ö´óÂ½µÄÁ÷Í¨»õ±Ò",0);
-    // restore_item blood_l=restore_item(1001,"Ğ¡ÑªÆ¿","Ğ¡ĞÍµÄÑªÁ¿»Ø¸´Ò©£¬¿ÉÒÔ»Ö¸´50µãÑªÁ¿",50);
-    // restore_item blood_m=restore_item(1002,"ÖĞÑªÆ¿","ÖĞĞÍµÄÑªÁ¿»Ø¸´Ò©£¬¿ÉÒÔ»Ö¸´50µãÑªÁ¿",100);
-    // restore_item blood_x=restore_item(1003,"ÖĞÑªÆ¿","´óĞÍµÄÑªÁ¿»Ø¸´Ò©£¬¿ÉÒÔ»Ö¸´150µãÑªÁ¿",150);
-    // restore_item mana_l=restore_item(1004,"Ğ¡À¶Æ¿","Ğ¡ĞÍµÄÄ§Á¦»Ø¸´Ò©£¬¿ÉÒÔ»Ö¸´50µãÄ§Á¦",50);
-    // restore_item mana_m=restore_item(1005,"ÖĞÀ¶Æ¿","ÖĞĞÍµÄÄ§Á¦»Ø¸´Ò©£¬¿ÉÒÔ»Ö¸´50µãÄ§Á¦",100);
-    // restore_item mana_x=restore_item(1006,"´óÀ¶Æ¿","´óĞÍµÄÄ§Á¦»Ø¸´Ò©£¬¿ÉÒÔ»Ö¸´150µãÄ§Á¦",150);
-    // non_restore_item ball_l=non_restore_item(1007,"»ù´¡¾«ÁéÇò","×îµÍ¼¶µÄ¾«ÁéÇò£¬Ğ¡¸ÅÂÊ²¶×½µ½¾«Áé",20);
-    // non_restore_item ball_m=non_restore_item(1008,"½ø½×¾«ÁéÇò","½ø½×µÄ¾«ÁéÇò£¬´ó¸ÅÂÊ²¶×½µ½¾«Áé",50);
-    // non_restore_item ball_x=non_restore_item(1009,"´óÊ¦¾«ÁéÇò","×î¸ß¼¶µÄ¾«ÁéÇò£¬±Ø¶¨²¶×½µ½¾«Áé",100);
+    
     void showback()
     {
         for(int i=0;i<10;i++)
@@ -86,12 +85,14 @@ public:
             }
         }
     }
-};
 
-class elf_pack
-{
-public:
-
+    ~back() 
+    {
+        for (item* ptr:itemlist) 
+        {
+            delete ptr;
+        }
+    }
 };
 
 class Account
@@ -99,9 +100,9 @@ class Account
     friend void registeraccount();
     friend void accountread(ifstream& opf,Account& temp);
 public:
-    string name;
+    char name[30]={0};
     int account;
-    string password;
+    char password[30]={0};
 };
 
 int getmenuchoice() 
@@ -109,7 +110,7 @@ int getmenuchoice()
     string input;
     while (true) 
     {
-        cout << "ÇëÊäÈëÑ¡Ïî£º";
+        cout << "è¯·è¾“å…¥é€‰é¡¹ï¼š";
         getline(cin, input);
         if (input.length() == 1) 
         {
@@ -119,7 +120,7 @@ int getmenuchoice()
                 return c-'0';
             }
         }
-        cout<<"ÇëÊä0-9Ö®¼äµÄÊı×Ö"<<endl;
+        cout<<"è¯·è¾“0-9ä¹‹é—´çš„æ•°å­—"<<endl;
     }
 }
 
@@ -128,11 +129,11 @@ int getnumber(int max)
     string input;
     while (true) 
     {
-        cout<<"×î¶à¿É¹ºÂòÊıÁ¿Îª"<<max<<endl;
+        cout<<"æœ€å¤šå¯è´­ä¹°æ•°é‡ä¸º"<<max<<endl;
         getline(cin, input);
         if (input.empty()) 
         {
-            cout<<"ÊäÈë²»ÄÜÎª¿Õ£¬ÇëÖØĞÂÊäÈë"<<endl;
+            cout<<"è¾“å…¥ä¸èƒ½ä¸ºç©ºï¼Œè¯·é‡æ–°è¾“å…¥"<<endl;
             continue;
         }
         bool isnumber=true;
@@ -149,11 +150,11 @@ int getnumber(int max)
         {
             int i=stoi(input);
             if(i<=max)return i;
-            else cout<<"¹ºÂòÊıÁ¿¹ı¶à"<<endl;
+            else cout<<"è´­ä¹°æ•°é‡è¿‡å¤š"<<endl;
         }
         else 
         {
-            cout<<"ÇëÊäÈëÕıÕûÊı"<<endl;
+            cout<<"è¯·è¾“å…¥æ­£æ•´æ•°"<<endl;
         }
     }
 }
@@ -168,13 +169,9 @@ void savedata(Account& accounts, back& backs)
     string filename=to_string(accounts.account)+".txt";
     ofstream file(filename,ios::out|ios::binary|ios::trunc);
     
-    size_t len=accounts.password.size();
-    file.write((const char*)&len,sizeof(size_t));
-    file.write(&accounts.password[0],len);
-    
-    len=accounts.name.size();
-    file.write((const char*)&len, sizeof(size_t));
-    file.write(&accounts.name[0],len);
+    file.write(&accounts.password[0],sizeof(char[30]));
+   
+    file.write(&accounts.name[0],sizeof(char[30]));
 
     for(int i:backs.amounts)
     {
@@ -186,76 +183,91 @@ void savedata(Account& accounts, back& backs)
 
 void place(Account& tempaccount,back& backs)
 {
-    cout<<"1:ÉÌµê"<<endl;
-    cout<<"2:Ò½Ôº"<<endl;
-    cout<<"3:¿óÂö"<<endl;
-    cout<<"4:É­ÁÖ"<<endl;
-    cout<<"5:¾«Áéºş"<<endl;
-    cout<<"6:»ğÉ½"<<endl;
-    cout<<"7:Ô­Ê¼É½Âö"<<endl;
-    cout<<"0:¼ÒÔ°"<<endl;
+    cout<<"1:å•†åº—"<<endl;
+    cout<<"2:çŸ¿è„‰"<<endl;
+    cout<<"3:æ£®æ—"<<endl;
+    cout<<"4:ç²¾çµæ¹–"<<endl;
+    cout<<"5:ç«å±±"<<endl;
+    cout<<"6:åŸå§‹å±±è„‰"<<endl;
+    cout<<"0:å®¶å›­"<<endl;
     int choice=getmenuchoice();
     switch(choice)
     {
         case 1:
-        {
-            cout<<"1:¹ºÂòÎïÆ·"<<endl;
-            cout<<"0:Àë¿ªÉÌµê"<<endl;
-            int choice1=getmenuchoice();
-            if(choice1!=1)return;
-            else
             {
-                while(true)
-                {
-                cout<<"ÇëÑ¡ÔñÒª¹ºÂòµÄÎïÆ·"<<endl;
-                cout<<"1:Ğ¡ÑªÆ¿"<<endl;
-                cout<<"2:ÖĞÑªÆ¿"<<endl;
-                cout<<"3:´óÑªÆ¿"<<endl;
-                cout<<"4:Ğ¡Ä§Á¦Æ¿"<<endl;
-                cout<<"5:ÖĞÄ§Á¦Æ¿"<<endl;
-                cout<<"6:´óÄ§Á¦Æ¿"<<endl;
-                cout<<"7:»ù´¡¾«ÁéÇò"<<endl;
-                cout<<"8:½ø½×¾«ÁéÇò"<<endl;
-                cout<<"9:´óÊ¦¾«ÁéÇò"<<endl;
-                cout<<"0:ÍË³öÉÌµê"<<endl;
-                int choice11=getmenuchoice();
-                if(choice11!=0)
-                {
-                int max=9999-backs.amounts[choice11];
-                int number=getnumber(max);
-                if(backs.amounts[0]<number*backs.itemlist[choice11]->price)
-                {
-                    cout<<"½ğ±Ò²»×ã£¬ÎŞ·¨¹ºÂò"<<endl;
-                }
+                cout<<"1:è´­ä¹°ç‰©å“"<<endl;
+                cout<<"0:ç¦»å¼€å•†åº—"<<endl;
+                int choice1=getmenuchoice();
+                if(choice1!=1)return;
                 else
                 {
-                    backs.amounts[0]-=number*backs.itemlist[choice11]->price;
-                    backs.amounts[choice11]+=number;
-                    cout<<"¹ºÂò³É¹¦"<<endl;
-                    continue;
-                }
-                }
-                else
-                {
-                    return;
-                }
+                    while(true)
+                    {
+                        cout<<"è¯·é€‰æ‹©è¦è´­ä¹°çš„ç‰©å“"<<endl;
+                        cout<<"1:å°è¡€ç“¶"<<endl;
+                        cout<<"2:ä¸­è¡€ç“¶"<<endl;
+                        cout<<"3:å¤§è¡€ç“¶"<<endl;
+                        cout<<"4:å°é­”åŠ›ç“¶"<<endl;
+                        cout<<"5:ä¸­é­”åŠ›ç“¶"<<endl;
+                        cout<<"6:å¤§é­”åŠ›ç“¶"<<endl;
+                        cout<<"7:åŸºç¡€ç²¾çµçƒ"<<endl;
+                        cout<<"8:è¿›é˜¶ç²¾çµçƒ"<<endl;
+                        cout<<"9:å¤§å¸ˆç²¾çµçƒ"<<endl;
+                        cout<<"0:é€€å‡ºå•†åº—"<<endl;
+                        int choice11=getmenuchoice();
+                        if(choice11!=0)
+                        {
+                            int max=9999-backs.amounts[choice11];
+                            int number=getnumber(max);
+                            if(backs.amounts[0]<number*backs.itemlist[choice11]->price)
+                                cout<<"é‡‘å¸ä¸è¶³ï¼Œæ— æ³•è´­ä¹°"<<endl;
+                            else
+                                {
+                                    backs.amounts[0]-=number*backs.itemlist[choice11]->price;
+                                    backs.amounts[choice11]+=number;
+                                    cout<<"è´­ä¹°æˆåŠŸ"<<endl;
+                                    continue;
+                                }
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
                 }
             }
-        }
             break;
         case 2:
+            {
+
+            }
             break;
         case 3:
+            {
+                
+            }
             break;
         case 4:
+            {
+                
+            }
             break;
         case 5:
+            {
+                
+            }
             break;
         case 6:
-            break;
-        case 7:
+            {
+
+            }
             break;
         case 0:return;
+
+        default :cout<<"è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ï¼š"<<endl;
+                 system("pause");
+                 system("cls");
+                 break;
     }
 }
 
@@ -264,15 +276,9 @@ void readdata(Account& accounts, back& backs)
     string filename=to_string(accounts.account)+".txt";
     ifstream opf(filename,ios::in|ios::binary);
 
-    size_t len;
-
-    opf.read((char*)&len,sizeof(size_t));
-    accounts.password.resize(len);
-    opf.read(&accounts.password[0],len);
+    opf.read(&accounts.password[0],sizeof(char[30]));
     
-    opf.read((char*)&len,sizeof(size_t));
-    accounts.name.resize(len);
-    opf.read(&accounts.name[0],len);
+    opf.read(&accounts.name[0],sizeof(char[30]));
 
     for(int i=0;i<10;i++)
     {
@@ -285,10 +291,10 @@ void game_begin(Account& tempaccount,back& backs)
     while(true)
     {
         int choice1;
-        cout<<"1:´ò¿ª±³°ü"<<endl;
-        cout<<"2:²é¿´¾«Áé"<<endl;
-        cout<<"3:´ò¿ªµØÍ¼"<<endl;
-        cout<<"0:ÍË³öµÇÂ¼"<<endl;
+        cout<<"1:æ‰“å¼€èƒŒåŒ…"<<endl;
+        cout<<"2:æŸ¥çœ‹ç²¾çµ"<<endl;
+        cout<<"3:æ‰“å¼€åœ°å›¾"<<endl;
+        cout<<"0:é€€å‡ºç™»å½•"<<endl;
         choice1=getmenuchoice();
         switch (choice1)
         {
@@ -296,6 +302,20 @@ void game_begin(Account& tempaccount,back& backs)
                 system("pause");
             break;
         case 2:
+            {
+                string filename=to_string(tempaccount.account)+".txt";
+                int a,b,c,num;
+                ifstream opf(filename,ios::in|ios::binary);
+                opf.seekg(124,ios::beg);
+                for(int i=0;i<num;i++)
+                {
+                    Pokemon* temp;
+                    opf.read((char*)&a,sizeof(int));
+                    opf.read((char*)&b,sizeof(int));
+                    opf.read((char*)&c,sizeof(int));
+                    cout<<a<<' '<<b<<' '<<c<<' '<<endl;
+                }
+            }
             break;
         case 3:place(tempaccount,backs);
             break;
@@ -304,7 +324,7 @@ void game_begin(Account& tempaccount,back& backs)
                 savedata(tempaccount,backs);
                 return;
             }
-        default:cout<<"ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë£º"<<endl;
+        default:cout<<"è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ï¼š"<<endl;
                 system("pause");
                 system("cls");
                 break;
@@ -313,7 +333,7 @@ void game_begin(Account& tempaccount,back& backs)
     }
 }
 
-// ¼ÓÃÜº¯Êı
+// åŠ å¯†å‡½æ•°
 string encryption(const string& text) 
 {
     string result;
@@ -341,40 +361,60 @@ void registeraccount()
     Account temp;
     back backs;
     ifstream opf;
-    string temp_password;
+    string temp_password,temp_name,x;
 
-    cout<<"1:ĞŞ¸ÄÃÜÂë"<<endl;
-    cout<<"0:·µ»ØÖ÷²Ëµ¥"<<endl;
+    cout<<"1:æ³¨å†Œè´¦å·"<<endl;
+    cout<<"0:è¿”å›ä¸»èœå•"<<endl;
     int loginChoice = getmenuchoice();
     if(loginChoice==0) 
     {
         return;
     }
-    shuru: cout<<"ÇëÊäÈëÕËºÅ(½öÏŞÊı×Ö£¬³¤¶È7Î»):"<<endl;
-    cin>>temp.account;
+    shuru: cout<<"è¯·è¾“å…¥è´¦å·(ä»…é™æ•°å­—ï¼Œé•¿åº¦7ä½):"<<endl;
+    cin>>x;
     clearInputBuffer();
+    if(x.length()!=7||!all_of(x.begin(),x.end(),::isdigit)) 
+        {
+            cout << "è´¦å·å¿…é¡»ä¸º7ä½æ•°å­—ï¼" << endl;
+            goto shuru;
+        }
+    else temp.account=stoi(x);
     string temp_account=to_string(temp.account)+".txt";
     opf.open(temp_account,ios::in|ios::binary);
     bool isopen=opf.is_open();
     opf.close();
     if(isopen)
     {
-        cout<<"¸ÃÕËºÅÒÑ±»×¢²á£¬ÇëÖØĞÂÊäÈë£º"<<endl;
+        cout<<"è¯¥è´¦å·å·²è¢«æ³¨å†Œï¼Œè¯·é‡æ–°è¾“å…¥ï¼š"<<endl;
         goto shuru;
     }
-    cout<<"ÇëÊäÈëÃÜÂë£º"<<endl;
+    shurumima:cout<<"è¯·è¾“å…¥å¯†ç ï¼š"<<endl;
     cin>>temp_password;
     clearInputBuffer();
-    temp.password=encryption(temp_password);
-    cout<<"ÇëÊäÈëêÇ³Æ£º"<<endl;
-    cin>>temp.name;
+    if(temp_password.length()>29)
+    {
+        cout<<"å¯†ç é•¿åº¦è¶…è¿‡29ï¼Œè¯·é‡æ–°è¾“å…¥ï¼š"<<endl;
+        goto shurumima;
+    }
+    strncpy(temp.password,&encryption(temp_password)[0],29);
+    temp.password[29]='\0';
+    shurunicheng:cout<<"è¯·è¾“å…¥æ˜µç§°ï¼š"<<endl;
+    cin>>temp_name;
     clearInputBuffer();
+    if(temp_name.length()>29)
+    {
+        cout<<"æ˜µç§°é•¿åº¦è¶…è¿‡29ï¼Œè¯·é‡æ–°è¾“å…¥ï¼š"<<endl;
+        goto shurunicheng;
+    }
+    strncpy(temp.name,&temp_name[0],29);
+    temp.name[29]='\0';
     savedata(temp,backs);
+    cout<<"æ³¨å†ŒæˆåŠŸï¼Œæ¬¢è¿ä½¿ç”¨"<<endl;
 }
 
 void exitgame()
 {
-    cout<<"»¶Ó­ÏÂ´ÎÊ¹ÓÃ£¡"<<endl;
+    cout<<"æ¬¢è¿ä¸‹æ¬¡ä½¿ç”¨ï¼"<<endl;
     system("pause");
     exit(0);
 }
@@ -384,19 +424,25 @@ void login()
     Account templog;
     back backs;
     int tempaccount;
-    string tempfilename,temppassword;
+    string tempfilename,temppassword,x;
     ifstream opf;
 
-    cout<<"1:ÊäÈëÕËºÅ"<<endl;
-    cout<<"0:·µ»ØÖ÷²Ëµ¥"<<endl;
+    cout<<"1:è¾“å…¥è´¦å·"<<endl;
+    cout<<"0:è¿”å›ä¸»èœå•"<<endl;
     int loginChoice = getmenuchoice();
     if(loginChoice == 0) 
     {
         return;
     }
 
-    shuru1: cout<<"ÇëÊäÈëÕËºÅ£º"<<endl;
-    cin>>templog.account;
+    shuru1: cout<<"è¯·è¾“å…¥è´¦å·ï¼š"<<endl;
+    cin>>x;
+    if(x.length()!=7||!all_of(x.begin(),x.end(),::isdigit)) 
+        {
+            cout<<"è´¦å·å¿…é¡»ä¸º7ä½æ•°å­—ï¼"<<endl;
+            goto shuru1;
+        }
+    else templog.account=stoi(x);
     clearInputBuffer();
     tempfilename=to_string(templog.account)+".txt";
     opf.open(tempfilename,ios::in|ios::binary);
@@ -404,27 +450,28 @@ void login()
     opf.close();
     if(!islog)
     {
-        cout<<"¸ÃÕËºÅÎ´×¢²á£¡"<<endl;
+        cout<<"è¯¥è´¦å·æœªæ³¨å†Œï¼"<<endl;
         goto shuru1;
     }
     readdata(templog,backs);
 
-    shurumima:cout<<"ÇëÊäÈëÃÜÂë£º"<<endl;
+    shurumima:cout<<"è¯·è¾“å…¥å¯†ç ï¼š"<<endl;
     cin>>temppassword;
     clearInputBuffer();
+    char temp_password[30];
+    strncpy(temp_password,&encryption(temppassword)[0],29);
+    temp_password[29]='\0';
 
-    if(templog.password==encryption(temppassword))
-    cout<<"µÇÂ¼³É¹¦,»¶Ó­ÓÎÍæ±¾ÓÎÏ·£¡"<<endl;
+    if(strcmp(templog.password,temp_password)==0)
+    cout<<"ç™»å½•æˆåŠŸ,æ¬¢è¿æ¸¸ç©æœ¬æ¸¸æˆï¼"<<endl;
     else 
     {
-        cout<<"ÃÜÂë´íÎó"<<endl;
+        cout<<"å¯†ç é”™è¯¯"<<endl;
         system("pause");
         goto shurumima;
     }
     game_begin(templog,backs);
 }
-
-
 
 void changepassword()
 {
@@ -435,14 +482,15 @@ void changepassword()
     back backs;
     string oldpassword,newpassword,filename;
 
-    cout<<"1:ĞŞ¸ÄÃÜÂë"<<endl;
-    cout<<"0:·µ»ØÖ÷²Ëµ¥"<<endl;
+    cout<<"1:ä¿®æ”¹å¯†ç "<<endl;
+    cout<<"0:è¿”å›ä¸»èœå•"<<endl;
     int loginChoice = getmenuchoice();
     if(loginChoice == 0) 
     {
         return;
     }
-    shuru2: cout<<"ÇëÊäÈëÕËºÅ"<<endl;
+
+    shuru2: cout<<"è¯·è¾“å…¥è´¦å·"<<endl;
     cin>>x.account;
     clearInputBuffer();
     filename=to_string(x.account)+".txt";
@@ -451,28 +499,39 @@ void changepassword()
     test.close();
     if(!isopen)
     {
-        cout<<"¸ÃÕËºÅ²»´æÔÚ,ÇëÖØĞÂÊäÈë"<<endl;
+        cout<<"è¯¥è´¦å·ä¸å­˜åœ¨,è¯·é‡æ–°è¾“å…¥"<<endl;
         goto shuru2;
     }
     readdata(x,backs);
 
-    shuruyuanmima:cout<<"ÇëÊäÈëÔ­ÃÜÂë:"<<endl;
+    shuruyuanmima:cout<<"è¯·è¾“å…¥åŸå¯†ç :"<<endl;
     cin>>oldpassword;
     clearInputBuffer();
+    char old_password[30];
+    strncpy(old_password,&encryption(oldpassword)[0],29);
+    old_password[29]='\0';
 
-    cout<<"ÇëÊäÈëĞÂÃÜÂë:"<<endl;
+    shuruxinmima:cout<<"è¯·è¾“å…¥æ–°å¯†ç :"<<endl;
     cin>>newpassword;
     clearInputBuffer();
-
-    if(encryption(oldpassword)==x.password)
+    if(newpassword.length()>29)
     {
-        x.password=encryption(newpassword);
+        cout<<"æ–°å¯†ç é•¿åº¦è¶…è¿‡29ï¼Œè¯·é‡æ–°è¾“å…¥ï¼š"<<endl;
+        goto shuruxinmima;
+    }
+    char new_password[30];
+    strncpy(new_password,&encryption(newpassword)[0],29);
+    new_password[29]='\0';
+
+    if(strcmp(old_password,x.password)==0)
+    {
+        strncpy(x.password,&encryption(newpassword)[0],30);
         savedata(x, backs);
-        cout << "ÃÜÂëĞŞ¸Ä³É¹¦" << endl;
+        cout << "å¯†ç ä¿®æ”¹æˆåŠŸ" << endl;
     }
     else
     {
-        cout<<"Ô­Ê¼ÃÜÂëÊäÈë´íÎó,ÇëÖØĞÂÊäÈë£º"<<endl;
+        cout<<"åŸå§‹å¯†ç è¾“å…¥é”™è¯¯,è¯·é‡æ–°è¾“å…¥ï¼š"<<endl;
         goto shuruyuanmima;
     }
 }
@@ -482,30 +541,31 @@ int main()
     int choice=0;
     while(true)
     {
-        cout<<"»¶Ó­ÓÎÍæ±¾ÓÎÏ·"<<endl;
-        cout<<"1:µÇÂ¼ÕËºÅ"<<endl;
-        cout<<"2:×¢²áÕËºÅ"<<endl;
-        cout<<"3:ĞŞ¸ÄÃÜÂë"<<endl;
-        cout<<"0:ÍË³öÓÎÏ·"<<endl;
+        cout<<"æ¬¢è¿æ¸¸ç©æœ¬æ¸¸æˆ"<<endl;
+        cout<<"1:ç™»å½•è´¦å·"<<endl;
+        cout<<"2:æ³¨å†Œè´¦å·"<<endl;
+        cout<<"3:ä¿®æ”¹å¯†ç "<<endl;
+        cout<<"0:é€€å‡ºæ¸¸æˆ"<<endl;
         choice = getmenuchoice();
         switch(choice)
         {
-            //µÇÂ¼ÕËºÅ
+            //ç™»å½•è´¦å·
             case 1: login();
                 break;
-            //×¢²áÕËºÅ
+            //æ³¨å†Œè´¦å·
             case 2: registeraccount();
                 break;
-            // ĞŞ¸ÄÃÜÂë
+            // ä¿®æ”¹å¯†ç 
             case 3: changepassword();
                 break;
-            // ÍË³öÓÎÏ·
+            // é€€å‡ºæ¸¸æˆ
             case 0:exitgame();
                 break;
-            default:cout<<"ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë£º"<<endl;
+            default:cout<<"è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ï¼š"<<endl;
                     system("pause");
                     system("cls");
                     break;
         }
     }
     return 0;
+}
