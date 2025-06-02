@@ -127,10 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Fight.h" />
+    <ClInclude Include="Figth.h" />
     <ClInclude Include="Pokemonclass.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Fight.cpp" />
     <ClCompile Include="Pokemonclass.cpp" />
+    <ClCompile Include="源.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
