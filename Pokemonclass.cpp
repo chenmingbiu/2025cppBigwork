@@ -26,6 +26,7 @@ protected:
 	int HPmax;	//当前状态下的最大生命值
 	int MPmax;	//当前状态下的最大能量值
 	double DOD = 0.1;	//闪避概率
+	int num;	//宝可梦种类编号
 	Skill skill[6];//技能，实际构造技能由子类进行。目前为每种宝可梦设定有六个技能。
 
 	void AttributeMaker(int EXP) {
@@ -116,6 +117,7 @@ Scizor::Scizor(int EXP) {
 	AttributeMaker(EXP);
 	AttributeRestorer();
 	Skillmaker();
+	num = 1;
 }
 
 class Metang :public ElementPokemon_Metal {	//合金十字
@@ -135,6 +137,7 @@ Metang::Metang(int EXP) {
 	AttributeMaker(EXP);
 	AttributeRestorer();
 	Skillmaker();
+	num = 2;
 }
 
 class Sceptile :public ElementPokemon_Mood {	//蜥蜴王
@@ -154,6 +157,7 @@ Sceptile::Sceptile(int EXP) {
 	AttributeMaker(EXP);
 	AttributeRestorer();
 	Skillmaker();
+	num = 3;
 }
 
 class Venusaur :public ElementPokemon_Mood {	//妙蛙花
@@ -173,6 +177,7 @@ Venusaur::Venusaur(int EXP) {
 	AttributeMaker(EXP);
 	AttributeRestorer();
 	Skillmaker();
+	num = 4;
 }
 
 class Gyarados :public ElementPokemon_Water {	//暴鲤龙
@@ -192,6 +197,7 @@ Gyarados::Gyarados(int EXP) {
 	AttributeMaker(EXP);
 	AttributeRestorer();
 	Skillmaker();
+	num = 5;
 }
 
 class Kingdra :public ElementPokemon_Water {	//刺龙王
@@ -211,6 +217,7 @@ Kingdra::Kingdra(int EXP) {
 	AttributeMaker(EXP);
 	AttributeRestorer();
 	Skillmaker();
+	num = 5;
 }
 
 class Arcanine :public ElementPokemon_Fire {	//风速狗
@@ -230,6 +237,7 @@ Arcanine::Arcanine(int EXP) {
 	AttributeMaker(EXP);
 	AttributeRestorer();
 	Skillmaker();
+	num = 7;
 }
 
 class Magmortar :public ElementPokemon_Fire {	//鸭嘴炎兽
@@ -249,6 +257,7 @@ Magmortar::Magmortar(int EXP) {
 	AttributeMaker(EXP);
 	AttributeRestorer();
 	Skillmaker();
+	num = 8;
 }
 
 class Donphan :public ElementPokemon_Terra {	//顿甲
@@ -268,6 +277,7 @@ Donphan::Donphan(int EXP) {
 	AttributeMaker(EXP);
 	AttributeRestorer();
 	Skillmaker();
+	num = 9;
 }
 
 class Marshtomp :public ElementPokemon_Terra {	//沼跃鱼
@@ -287,4 +297,5 @@ Marshtomp::Marshtomp(int EXP) {
 	AttributeMaker(EXP);
 	AttributeRestorer();
 	Skillmaker();
+	num = 10;
 }
