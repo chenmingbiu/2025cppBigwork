@@ -98,7 +98,6 @@ public:
 class Account
 {
     friend void registeraccount();
-    friend void accountread(ifstream& opf,Account& temp);
 public:
     char name[30]={0};
     int account;
