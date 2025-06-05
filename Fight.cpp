@@ -7,7 +7,8 @@
 #include <iostream>
 using namespace std;
 
-void Fight_Start(string name) {
+void Fight_Start(string accounts) {
+
 	cout << "请选择要出战的宝可梦：" << endl;
 
 }

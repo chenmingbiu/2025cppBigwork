@@ -333,6 +333,7 @@ Marshtomp::Marshtomp(int EXP) {
 	name = "Marshtomp";
 }
 
+
 unique_ptr<Pokemon> MultiPokemonCreater(int num, int EXP) {
 	switch (num)
 	{
@@ -351,7 +352,7 @@ unique_ptr<Pokemon> MultiPokemonCreater(int num, int EXP) {
 	}
 }
 vector<unique_ptr<Pokemon>> createPokemonTeam() {
-	vector<unique_ptr<Pokemon>> team(6);
+	vector<unique_ptr<Pokemon>> team;
 	//根据选择的宝可梦编号读取对应的数据（待完成）
 	team.push_back(MultiPokemonCreater(1, 50));
 
