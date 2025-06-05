@@ -219,12 +219,16 @@ void place(Account& tempaccount,back& backs)
                             int max=9999-backs.amounts[choice11];
                             int number=getnumber(max);
                             if(backs.amounts[0]<number*backs.itemlist[choice11]->price)
-                                cout<<"金币不足，无法购买"<<endl;
+                                {
+                                    cout<<"金币不足，无法购买"<<endl;
+                                    system("pause");
+                                }
                             else
                                 {
                                     backs.amounts[0]-=number*backs.itemlist[choice11]->price;
                                     backs.amounts[choice11]+=number;
                                     cout<<"购买成功"<<endl;
+                                    system("pause");
                                     continue;
                                 }
                         }
@@ -312,7 +316,8 @@ void game_begin(Account& tempaccount,back& backs)
                     opf.read((char*)&a,sizeof(int));
                     opf.read((char*)&b,sizeof(int));
                     opf.read((char*)&c,sizeof(int));
-                    cout<<a<<' '<<b<<' '<<c<<' '<<endl;
+                    cout<<a;
+                    // InfoDisplayer(b,c);
                 }
             }
             break;
