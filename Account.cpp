@@ -20,6 +20,9 @@ public:
     char password[30] = { 0 };
 };
 
+Account User;
+extern back Userback;
+
 void login()
 {
     Account templog;

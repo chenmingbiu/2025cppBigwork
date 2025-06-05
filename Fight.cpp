@@ -10,6 +10,9 @@
 
 using namespace std;
 
+extern Account User;
+extern back Userback;
+
 void Fight_Start(string accounts) {
 
 	cout << "请选择要出战的宝可梦：" << endl;

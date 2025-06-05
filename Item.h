@@ -4,6 +4,13 @@
 #include <vector>
 #include <cstring>
 #include <iostream>
+#include"Account.h"
+
+class back;
+class Account;
+
+extern back Userback;
+extern Account User;
 
 class item {
 protected:

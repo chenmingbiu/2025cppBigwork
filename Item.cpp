@@ -10,6 +10,10 @@
 #include<iostream>
 #include<algorithm>
 #include"teamwork.h"
+
+extern back Userback;
+extern Account User;
+
 class item
 {
 protected:
@@ -30,6 +34,7 @@ public:
     {
         cout << name << "   " << describe << "  ";
     }
+    
 };
 int item::getprice() {
     return price;
@@ -108,3 +113,4 @@ public:
         }
     }
 };
+

@@ -5,8 +5,12 @@
 #include <vector>
 #include <memory>
 #include <cmath>
+#include"Account.h"
 
 using namespace std;
+
+extern Account User;
+extern back Userback;
 
 struct Skill {
     int level;      

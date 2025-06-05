@@ -2,8 +2,9 @@
 #define ACCOUNT_H
 
 #include <string>
+#include"Item.h"
 
-class back; 
+class back;
 
 class Account
 {
@@ -13,6 +14,10 @@ public:
     int account;         
     char password[30] = { 0 };
 };
+
+extern Account User;
+extern back Userback;
+
 void login();
 
 void changepassword();

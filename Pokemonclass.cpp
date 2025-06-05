@@ -12,6 +12,9 @@
 
 using namespace std;
 
+extern Account User;
+extern back Userback;
+
 struct Skill{
 	int level;	//技能释放所要求的最低等级
 	double ATK;	//技能攻击力倍率

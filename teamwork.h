@@ -8,6 +8,9 @@
 #include <vector>
 #include <string>
 
+extern Account User;
+extern back Userback;
+
 int getmenuchoice(int);
 int getnumber(int max);
 void Nextstep();

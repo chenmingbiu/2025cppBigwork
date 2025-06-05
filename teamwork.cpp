@@ -13,6 +13,9 @@
 #include"teamwork.h"
 using namespace std;
 
+extern Account User;
+extern back Userback;
+
 int getmenuchoice(int num) 
 {
     string input;
