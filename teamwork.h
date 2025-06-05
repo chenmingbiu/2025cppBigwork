@@ -13,32 +13,33 @@ using namespace std;
 
 class item
 {
-public:
+protected:
     int id;
     int price;
     char name[30];
     char describe[1000];
+public:
     item(int a, char* b, int c, char* d);
-    virtual void showitem() {};
+    void showitem() {};
     virtual ~item() {}
 };
 
 class restore_item : public item
 {
     friend class back;
-public:
+protected:
     int effect;
+public:
     restore_item(int a, char* b, int c, char* d, int e);
-    void showitem();
 };
 
 class non_restore_item : public item
 {
     friend class back;
-public:
+protected:
     int success;
+public:
     non_restore_item(int a, char* b, int c, char* d, int e);
-    void showitem();
 };
 
 class back
