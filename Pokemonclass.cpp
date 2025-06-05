@@ -30,6 +30,7 @@ protected:
 	int MPmax;	//当前状态下的最大能量值
 	double DOD = 0.1;	//闪避概率
 	int num;	//宝可梦种类编号
+	string name;
 	Skill skill[6];//技能，实际构造技能由子类进行。目前为每种宝可梦设定有六个技能。
 
 	void AttributeMaker(int EXP) {
