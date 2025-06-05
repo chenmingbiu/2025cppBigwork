@@ -54,15 +54,6 @@ public:
     void HPadder(int);
     void MPadder(int);
     void MPreducer(int);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    int levelgetter();
->>>>>>> 新增文件添加项目文件�?
-=======
-=======
->>>>>>> 新增文件添加项目文件�?
     int levelgetter();
     int HPgetter();
     int MPgetter();
