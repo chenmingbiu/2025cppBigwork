@@ -11,11 +11,12 @@ using namespace std;
 
 class item
 {
-public:
+protected:
     int id;
     int price;
     char name[30]={0};
     char describe[1000]={0};
+public:
     item(int a,char* b,int c,char* d):id(a),price(c)
     {
         strncpy(name,b,29);
@@ -23,21 +24,31 @@ public:
         strncpy(describe,d,999);
         describe[999]='\0';
     }
-    virtual void showitem(){};
+    int getprice()
+    {
+        return price;
+    }
+    void showitem()
+    {
+        cout<<name<<"   "<<describe<<"  ";
+    }
 };
 
 class restore_item:public item
 {
     friend class back;
 
-public:
+protected:
+
     int effect;
+
+public:
     
     restore_item(int a,char* b,int c,char* d,int e):item(a,b,c,d),effect(e){}
 
-    void showitem()
+    int geteffect()
     {
-        cout<<name<<"   "<<describe<<"  ";
+        return effect;
     }
 };
 
@@ -45,14 +56,17 @@ class non_restore_item:public item
 {
     friend class back;
 
-public:
+protected:
+
     int success;
+
+public:
 
     non_restore_item(int a,char* b,int c,char* d,int e):item(a,b,c,d),success(e){}
     
-    void showitem()
+    int getsuccess()
     {
-        cout<<name<<"   "<<describe<<"  ";
+        return success;
     }
 };
 
@@ -73,7 +87,7 @@ public:
     new non_restore_item(1008,"进阶精灵球",200,"进阶的精灵球，大概率捕捉到精灵",50),
     new non_restore_item(1009,"大师精灵球",300,"最高级的精灵球，必定捕捉到精灵",100)
     };
-    
+
     void showback()
     {
         for(int i=0;i<10;i++)
@@ -88,9 +102,9 @@ public:
 
     ~back() 
     {
-        for (item* ptr:itemlist) 
+        for (item* x:itemlist) 
         {
-            delete ptr;
+            delete x;
         }
     }
 };
@@ -109,9 +123,9 @@ int getmenuchoice()
     string input;
     while (true) 
     {
-        cout << "请输入选项：";
-        getline(cin, input);
-        if (input.length() == 1) 
+        cout<<"请输入选项：";
+        getline(cin,input);
+        if (input.length()==1) 
         {
             char c = input[0];
             if (c>='0'&&c<='9') 
@@ -218,14 +232,15 @@ void place(Account& tempaccount,back& backs)
                         {
                             int max=9999-backs.amounts[choice11];
                             int number=getnumber(max);
-                            if(backs.amounts[0]<number*backs.itemlist[choice11]->price)
+                            if(backs.amounts[0]<number*backs.itemlist[choice11]->getprice())
                                 {
                                     cout<<"金币不足，无法购买"<<endl;
                                     system("pause");
+                                    continue;
                                 }
                             else
                                 {
-                                    backs.amounts[0]-=number*backs.itemlist[choice11]->price;
+                                    backs.amounts[0]-=number*backs.itemlist[choice11]->getprice();
                                     backs.amounts[choice11]+=number;
                                     cout<<"购买成功"<<endl;
                                     system("pause");
