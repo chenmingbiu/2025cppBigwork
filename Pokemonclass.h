@@ -55,6 +55,10 @@ public:
     void MPadder(int);
     void MPreducer(int);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    int levelgetter();
+>>>>>>> 新增文件添加项目文件�?
 =======
     int levelgetter();
 >>>>>>> 新增文件添加项目文件�?
@@ -64,7 +68,6 @@ public:
     int DEFgetter();
     double DODgetter();
     Skill SkillSelector(int num);
-
     void InfoDisplayer();
     void SkillDisplayer();
     void InfoDisplayer_Liter();

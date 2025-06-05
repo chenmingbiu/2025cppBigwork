@@ -31,14 +31,9 @@ FightDuring_Start:
 	cout << "4. 药品" << endl;
 	cout << "5. 精灵球" << endl;
 	cout << "6. 逃跑" << endl;
-<<<<<<< HEAD
 	cout << "请输入对应数字：";
 	clearInputBuffer();
-	selection = getnumber(6);
-=======
-	clearInputBuffer();
 	selection = getmenuchoice(6);
->>>>>>> 鏂板鏂囦欢娣诲姞椤圭洰鏂囦欢銆?
 	switch (selection)
 	{
 	case 1: {
@@ -49,63 +44,6 @@ FightDuring_Start:
 	case 3:; break;
 	case 4:; break;
 	case 5:; break;
-<<<<<<< HEAD
-	case 6: { if (Fight_Escape())return 0; else Escape_Fail(Mine, Enemy, skill_enemy); goto FightDuring_Start; };
-	default:cout << "请输入正确的操作数字！" << endl; goto FightDuring_Start;
-	}
-	return 0;
-}
-
-bool Fight_Escape() {
-	int num = 70;
-	int Ran = RandomNumber(100);
-	if (Ran <= num)return true;
-	else return false;
-}
-
-void Fight_Action(Pokemon& Mine, Pokemon& Enemy, Skill skill_mine, Skill skill_enemy) {
-	int damage;
-	double DEFrate;	//伤害减免率；
-	DEFrate =Enemy.DEFgetter() * skill_enemy.DEF / (45 + Enemy.DEFgetter() * skill_enemy.DEF);	//伤害减免率=防御数值/（常数+防御数值）
-	damage = Mine.ATKgetter() * skill_mine.ATK * (1 - DEFrate);
-	Enemy.DAGmaker(damage); if (!Enemy.HPgetter())return;
-	DEFrate = Mine.DEFgetter() * skill_mine.DEF / (45 + Mine.DEFgetter() * skill_mine.DEF);
-	damage = Enemy.ATKgetter() * skill_enemy.ATK * (1 - DEFrate);
-	Mine.DAGmaker(damage); return;
-}
-
-void Escape_Fail(Pokemon& Mine, Pokemon& Enemy, Skill skill_enemy) {
-	int damage;
-	double DEFrate;
-	DEFrate = Mine.DEFgetter()/ (45 + Mine.DEFgetter());
-	damage = Enemy.ATKgetter() * skill_enemy.ATK * (1 - DEFrate);
-	Mine.DAGmaker(damage); return;
-}
-
-bool SkillCertify(Pokemon& Mine, Skill skill_mine) {	//技能可用性检定
-	if (Mine.MPgetter() >= skill_mine.MP)return true; else return false;
-}
-
-int ATKselect(Pokemon& Mine, Skill& skill_mine) {
-	int selection;
-	system("cls");
-	Mine.InfoDisplayer_Liter();
-	cout << "攻击技能 1：" << endl;
-	Mine.SkillDisplayer_Lite(1);
-	cout << "攻击技能 2：" << endl;
-	Mine.SkillDisplayer_Lite(2);
-	cout << "攻击技能 3：" << endl;
-	Mine.SkillDisplayer_Lite(3);
-ATKselect_Start:
-	clearInputBuffer();
-	selection = getnumber(6);
-	switch (selection)
-	{
-	case 1:if(SkillCertify(Mine,Mine.SkillSelector(1)))
-	default:
-		break;
-	}
-=======
 	case 6: { if (Fight_Escape())return 0; else { Escape_Fail(Mine, Enemy, skill_enemy); cout << "逃跑失败" << endl; goto FightDuring_Start; } };
 	default: goto FightDuring_Start;
 	}
@@ -170,5 +108,4 @@ ATKselect_Start:
 	default:goto ATKselect_Start;
 		break;
 	}
->>>>>>> 鏂板鏂囦欢娣诲姞椤圭洰鏂囦欢銆?
 }
