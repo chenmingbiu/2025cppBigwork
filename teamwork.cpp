@@ -67,6 +67,13 @@ int getnumber(int max)
     }
 }
 
+int RandomNumber(int num) {
+    mt19937 rng(std::random_device{}());
+    uniform_int_distribution<int> dist(1, num);
+    int random_num = dist(rng);
+    return random_num;
+}
+
 void clearInputBuffer() {
     cin.clear();
     cin.ignore(1024,'\n');

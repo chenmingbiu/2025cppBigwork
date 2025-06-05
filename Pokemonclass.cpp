@@ -40,6 +40,7 @@ protected:
 
 	void AttributeMaker(int EXP) {
 		level = int(pow(EXP, 0.5));	//使用经验值构造等级
+		if (level > 100)level = 100;	//最高等级为100级
 		ATK = 10 + (5 * level);//使用等级构造攻击力，下同。
 		DEF = 5 + (4 * level);
 		HPmax = (20 * level) + 100;
@@ -53,6 +54,13 @@ protected:
 public:
 	void DAGmaker(int DAG) { HP -= DAG; if (HP < 0)HP = 0; }	//伤害施加函数
 	void HPadder(int HPadd) { HP += HPadd; if (HP > HPmax)HP = HPmax; }	//生命值回复函数
+	void MPadder(int MPadd) { MP += MPadd; if (MP > MPmax)MP = MPmax; }
+	void MPreducer(int MPred) { MP -= MPred;}
+	int HPgetter() { return HP; }
+	int MPgetter() { return MP; }
+	int ATKgetter() { return ATK; }
+	int DEFgetter() { return DEF; }
+	double DODgetter() { return DOD; }
 	Skill SkillSelector(int num) { return skill[num - 1]; }
 	int GetPokemonType() { return num; }	//获取宝可梦的种类编号
 	void InfoDisplayer() {	//宝可梦基本信息查看函数
@@ -86,6 +94,7 @@ public:
 		cout << "能量值：" << MP << " / " << MPmax << endl;
 	}
 	void SkillDisplayer_Lite(int i) {	//技能预选界面使用的简要信息呈现
+		i--;
 		cout << "技能名称：" << skill[i].name << endl;
 		cout << "攻击倍率：" << skill[i].ATK * 100 << "%" << endl;
 		cout << "防御倍率：" << skill[i].DEF * 100 << "%" << endl;

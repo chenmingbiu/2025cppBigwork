@@ -48,36 +48,28 @@ protected:
     }
 
 public:
-    // 虚析构函数确保正确释放资源
     virtual ~Pokemon() = default;
 
-    // 战斗接口
-    void DAGmaker(int damage) {
-        HP -= damage;
-        if (HP < 0) HP = 0;
-    }
-    void HPadder(int heal) {
-        HP += heal;
-        if (HP > HPmax) HP = HPmax;
-    }
-    Skill SkillSelector(int num) const {
-        return skill[num - 1];
-    }
+    void DAGmaker(int);
+    void HPadder(int);
+    void MPadder(int);
+    void MPreducer(int);
+    int HPgetter();
+    int MPgetter();
+    int ATKgetter();
+    int DEFgetter();
+    double DODgetter();
+    Skill SkillSelector(int num);
 
-    // 信息展示
     void InfoDisplayer();
     void SkillDisplayer();
     void InfoDisplayer_Liter();
     void SkillDisplayer_Lite(int i);
-
-    // 纯虚函数（需派生类实现）
-    virtual int GetPokemonType() const = 0;
+    virtual int GetPokemonType() = 0;
     virtual void Skillmaker() = 0;
     std::vector<Pokemon*> CreatePokemonArray(const std::vector<int>& nums, const std::vector<int>& exps);
     Pokemon* CreatePokemon(int num, int EXP);
 };
-
-// 元素类型基类（金/木/水/火/土）
 class ElementPokemon_Metal : public Pokemon {
 protected:
     const std::string elementname = "Metal";
@@ -104,14 +96,7 @@ protected:
     const int elementnum = 5;
 };
 
-// 具体宝可梦实现（示例：巨钳螳螂）
-class Scizor : public ElementPokemon_Metal {
-    void Skillmaker() override;
-public:
-    explicit Scizor(int EXP);
-};
-
-// 其他宝可梦类声明（省略具体实现，保持头文件简洁）
+class Scizor : public ElementPokemon_Metal { void Skillmaker() override; public: explicit Scizor(int); };
 class Metang : public ElementPokemon_Metal { void Skillmaker() override; public: explicit Metang(int); };
 class Sceptile : public ElementPokemon_Mood { void Skillmaker() override; public: explicit Sceptile(int); };
 class Venusaur : public ElementPokemon_Mood { void Skillmaker() override; public: explicit Venusaur(int); };
@@ -122,9 +107,4 @@ class Magmortar : public ElementPokemon_Fire { void Skillmaker() override; publi
 class Donphan : public ElementPokemon_Terra { void Skillmaker() override; public: explicit Donphan(int); };
 class Marshtomp : public ElementPokemon_Terra { void Skillmaker() override; public: explicit Marshtomp(int); };
 
-// 工厂函数声明：根据num选择派生类并返回Pokemon指针
-
-
-// 批量创建宝可梦数组的函数声明
-
-#endif POKEMONCLASS_H
+#endif
