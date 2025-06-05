@@ -139,6 +139,7 @@ Scizor::Scizor(int EXP) {
 	AttributeRestorer();
 	Skillmaker();
 	num = 1;
+	name = "Scizor";
 }
 
 class Metang :public ElementPokemon_Metal {	//ºÏ½ğÊ®×Ö
@@ -159,6 +160,7 @@ Metang::Metang(int EXP) {
 	AttributeRestorer();
 	Skillmaker();
 	num = 2;
+	name = "Metang";
 }
 
 class Sceptile :public ElementPokemon_Mood {	//òáòæÍõ
@@ -179,6 +181,7 @@ Sceptile::Sceptile(int EXP) {
 	AttributeRestorer();
 	Skillmaker();
 	num = 3;
+	name = "Sceptile";
 }
 
 class Venusaur :public ElementPokemon_Mood {	//ÃîÍÜ»¨
@@ -199,6 +202,7 @@ Venusaur::Venusaur(int EXP) {
 	AttributeRestorer();
 	Skillmaker();
 	num = 4;
+	name = "Venusaur";
 }
 
 class Gyarados :public ElementPokemon_Water {	//±©ÀğÁú
@@ -219,6 +223,7 @@ Gyarados::Gyarados(int EXP) {
 	AttributeRestorer();
 	Skillmaker();
 	num = 5;
+	name = "Gyarados";
 }
 
 class Kingdra :public ElementPokemon_Water {	//´ÌÁúÍõ
@@ -239,6 +244,7 @@ Kingdra::Kingdra(int EXP) {
 	AttributeRestorer();
 	Skillmaker();
 	num = 5;
+	name = "Kingdra";
 }
 
 class Arcanine :public ElementPokemon_Fire {	//·çËÙ¹·
@@ -259,6 +265,7 @@ Arcanine::Arcanine(int EXP) {
 	AttributeRestorer();
 	Skillmaker();
 	num = 7;
+	name = "Arcanine";
 }
 
 class Magmortar :public ElementPokemon_Fire {	//Ñ¼×ìÑ×ÊŞ
@@ -279,6 +286,7 @@ Magmortar::Magmortar(int EXP) {
 	AttributeRestorer();
 	Skillmaker();
 	num = 8;
+	name = "Magmortar";
 }
 
 class Donphan :public ElementPokemon_Terra {	//¶Ù¼×
@@ -299,6 +307,7 @@ Donphan::Donphan(int EXP) {
 	AttributeRestorer();
 	Skillmaker();
 	num = 9;
+	name = "Donphan";
 }
 
 class Marshtomp :public ElementPokemon_Terra {	//ÕÓÔ¾Óã
@@ -319,6 +328,7 @@ Marshtomp::Marshtomp(int EXP) {
 	AttributeRestorer();
 	Skillmaker();
 	num = 10;
+	name = "Marshtomp";
 }
 
 unique_ptr<Pokemon> MultiPokemonCreater(int num, int EXP) {
