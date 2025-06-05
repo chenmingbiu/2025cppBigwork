@@ -127,15 +127,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Account.h" />
     <ClInclude Include="Fight.h" />
     <ClInclude Include="Figth.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="Pokemonclass.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Account.cpp" />
     <ClCompile Include="Fight.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="Pokemonclass.cpp" />
     <ClCompile Include="teamwork.cpp" />
     <ClCompile Include="源.cpp" />
+    <ClCompile Include="源1.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

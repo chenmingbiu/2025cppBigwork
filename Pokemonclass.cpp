@@ -1,10 +1,15 @@
 #include "Pokemonclass.h"
+#include "Account.h"
+#include "Item.h"
+#include "teamwork.h"
+#include "Fight.h"
 #include <string>
 #include <cmath>
 #include <iostream>
 #include <cstdlib>
 #include <vector>
 #include <memory>
+
 using namespace std;
 
 struct Skill{
@@ -90,7 +95,34 @@ public:
 		cout << "技能释放所需最低等级：" << skill[i].level << "级" << endl;
 		cout << endl;
 	}
+	Pokemon* CreatePokemon(int num, int EXP) {
+		switch (num) {
+		case 1: return new Scizor(EXP);
+		case 2: return new Metang(EXP);
+		case 3: return new Sceptile(EXP);
+		case 4: return new Venusaur(EXP);
+		case 5: return new Gyarados(EXP);
+		case 6: return new Kingdra(EXP);
+		case 7: return new Arcanine(EXP);
+		case 8: return new Magmortar(EXP);
+		case 9: return new Donphan(EXP);
+		case 10: return new Marshtomp(EXP);
+		default: throw std::invalid_argument("Invalid Pokemon num.");
+		}
+	}
+	vector<Pokemon*> CreatePokemonArray(const std::vector<int>& nums, const std::vector<int>& exps) {
+		if (nums.size() != exps.size()) {
+			throw std::invalid_argument("nums and exps must have the same size.");
+		}
+
+		std::vector<Pokemon*> pokemons;
+		for (size_t i = 0; i < nums.size(); ++i) {
+			pokemons.push_back(CreatePokemon(nums[i], exps[i]));
+		}
+		return pokemons;
+	}
 };
+
 //此为宝可梦基类的内容（未完全完成），在设定上所有宝可梦都使用相同的“经验值-等级”转换和“等级-其他属性”转换，
 //而实际在战斗过程中产生差别的是技能倍率，因此在此处实现这两类数值的转换函数。
 //宝可梦有五种元素类型,在战斗中元素之间有克制关系，会影响伤害的数值。
@@ -333,28 +365,3 @@ Marshtomp::Marshtomp(int EXP) {
 	name = "Marshtomp";
 }
 
-
-unique_ptr<Pokemon> MultiPokemonCreater(int num, int EXP) {
-	switch (num)
-	{
-	case 1: return make_unique<Scizor>(EXP);
-	case 2: return make_unique<Metang>(EXP);
-	case 3: return make_unique<Sceptile>(EXP);
-	case 4: return make_unique<Venusaur>(EXP);
-	case 5: return make_unique<Gyarados>(EXP);
-	case 6: return make_unique<Kingdra>(EXP);
-	case 7: return make_unique<Arcanine>(EXP);
-	case 8: return make_unique<Magmortar>(EXP);
-	case 9: return make_unique<Donphan>(EXP);
-	case 10: return make_unique<Marshtomp>(EXP);
-	default: return nullptr;
-		break;
-	}
-}
-vector<unique_ptr<Pokemon>> createPokemonTeam() {
-	vector<unique_ptr<Pokemon>> team;
-	//根据选择的宝可梦编号读取对应的数据（待完成）
-	team.push_back(MultiPokemonCreater(1, 50));
-
-	return team;
-}

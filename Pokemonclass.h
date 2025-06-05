@@ -2,156 +2,129 @@
 #define POKEMONCLASS_H
 
 #include <string>
+#include <vector>
+#include <memory>
+#include <cmath>
+
 using namespace std;
 
-// 技能结构体声明
 struct Skill {
-    int level;
-    double ATK;
-    double DEF;
-    double HP;
-    int MP;
-    double DOD;
-    int num;
-    string name;
+    int level;      
+    double ATK;      
+    double DEF;      
+    double HP;       
+    int MP;          
+    double DOD;      
+    int num;         
+    std::string name;
 };
-
-// 宝可梦基类声明
 class Pokemon {
 protected:
-    int level;
-    int EXP;
-    int ATK;
-    int DEF;
-    int HP;
-    int MP;
-    int HPmax;
-    int MPmax;
-    double DOD;
-    int num;
-    Skill skill[6];
+    // 基础属性
+    int level;              // 等级
+    int EXP;                // 经验值
+    int ATK;                // 攻击力
+    int DEF;                // 防御力
+    int HP;                 // 当前生命值
+    int MP;                 // 当前魔法值
+    int HPmax;              // 最大生命值
+    int MPmax;              // 最大魔法值
+    double DOD = 0.1;       // 基础闪避率
+    int num;                // 宝可梦编号
+    std::string name;       // 宝可梦名称
+    Skill skill[6];         // 技能数组
 
-    void AttributeMaker(int EXP);
-    void AttributeRestorer();
-    virtual void Skillmaker() = 0;  // 纯虚函数，需子类实现
+    // 核心算法
+    void AttributeMaker(int EXP) {
+        level = static_cast<int>(std::pow(EXP, 0.5));
+        ATK = 10 + 5 * level;
+        DEF = 5 + 4 * level;
+        HPmax = 20 * level + 100;
+        MPmax = 200 + 8 * level;
+    }
+    void AttributeRestorer() {
+        HP = HPmax;
+        MP = MPmax;
+    }
 
 public:
-    void DAGmaker(int DAG);
-    void HPadder(int HPadd);
+    // 虚析构函数确保正确释放资源
+    virtual ~Pokemon() = default;
+
+    // 战斗接口
+    void DAGmaker(int damage) {
+        HP -= damage;
+        if (HP < 0) HP = 0;
+    }
+    void HPadder(int heal) {
+        HP += heal;
+        if (HP > HPmax) HP = HPmax;
+    }
+    Skill SkillSelector(int num) const {
+        return skill[num - 1];
+    }
+
+    // 信息展示
     void InfoDisplayer();
     void SkillDisplayer();
+    void InfoDisplayer_Liter();
+    void SkillDisplayer_Lite(int i);
+
+    // 纯虚函数（需派生类实现）
+    virtual int GetPokemonType() const = 0;
+    virtual void Skillmaker() = 0;
+    std::vector<Pokemon*> CreatePokemonArray(const std::vector<int>& nums, const std::vector<int>& exps);
+    Pokemon* CreatePokemon(int num, int EXP);
 };
 
-// 元素类型子类声明
+// 元素类型基类（金/木/水/火/土）
 class ElementPokemon_Metal : public Pokemon {
 protected:
-    string elementname = "Metal";
-    int elementnum = 1;
+    const std::string elementname = "Metal";
+    const int elementnum = 1;
 };
-
 class ElementPokemon_Mood : public Pokemon {
 protected:
-    string elementname = "Mood";
-    int elementnum = 2;
+    const std::string elementname = "Mood";
+    const int elementnum = 2;
 };
-
 class ElementPokemon_Water : public Pokemon {
 protected:
-    string elementname = "Water";
-    int elementnum = 3;
+    const std::string elementname = "Water";
+    const int elementnum = 3;
 };
-
 class ElementPokemon_Fire : public Pokemon {
 protected:
-    string elementname = "Fire";
-    int elementnum = 4;
+    const std::string elementname = "Fire";
+    const int elementnum = 4;
 };
-
 class ElementPokemon_Terra : public Pokemon {
 protected:
-    string elementname = "Terra";
-    int elementnum = 5;
+    const std::string elementname = "Terra";
+    const int elementnum = 5;
 };
 
-// 具体宝可梦类声明
+// 具体宝可梦实现（示例：巨钳螳螂）
 class Scizor : public ElementPokemon_Metal {
-protected:
-    void Skillmaker() override;  // 隐式实现纯虚函数
-
-public:
-    Scizor(int EXP);
-};
-
-class Metang : public ElementPokemon_Metal {
-protected:
     void Skillmaker() override;
-
 public:
-    Metang(int EXP);
+    explicit Scizor(int EXP);
 };
 
-class Sceptile : public ElementPokemon_Mood {
-protected:
-    void Skillmaker() override;
+// 其他宝可梦类声明（省略具体实现，保持头文件简洁）
+class Metang : public ElementPokemon_Metal { void Skillmaker() override; public: explicit Metang(int); };
+class Sceptile : public ElementPokemon_Mood { void Skillmaker() override; public: explicit Sceptile(int); };
+class Venusaur : public ElementPokemon_Mood { void Skillmaker() override; public: explicit Venusaur(int); };
+class Gyarados : public ElementPokemon_Water { void Skillmaker() override; public: explicit Gyarados(int); };
+class Kingdra : public ElementPokemon_Water { void Skillmaker() override; public: explicit Kingdra(int); };
+class Arcanine : public ElementPokemon_Fire { void Skillmaker() override; public: explicit Arcanine(int); };
+class Magmortar : public ElementPokemon_Fire { void Skillmaker() override; public: explicit Magmortar(int); };
+class Donphan : public ElementPokemon_Terra { void Skillmaker() override; public: explicit Donphan(int); };
+class Marshtomp : public ElementPokemon_Terra { void Skillmaker() override; public: explicit Marshtomp(int); };
 
-public:
-    Sceptile(int EXP);
-};
+// 工厂函数声明：根据num选择派生类并返回Pokemon指针
 
-class Venusaur : public ElementPokemon_Mood {
-protected:
-    void Skillmaker() override;
 
-public:
-    Venusaur(int EXP);
-};
+// 批量创建宝可梦数组的函数声明
 
-class Gyarados : public ElementPokemon_Water {
-protected:
-    void Skillmaker() override;
-
-public:
-    Gyarados(int EXP);
-};
-
-class Kingdra : public ElementPokemon_Water {
-protected:
-    void Skillmaker() override;
-
-public:
-    Kingdra(int EXP);
-};
-
-class Arcanine : public ElementPokemon_Fire {
-protected:
-    void Skillmaker() override;
-
-public:
-    Arcanine(int EXP);
-};
-
-class Magmortar : public ElementPokemon_Fire {
-protected:
-    void Skillmaker() override;
-
-public:
-    Magmortar(int EXP);
-};
-
-class Donphan : public ElementPokemon_Terra {
-protected:
-    void Skillmaker() override;
-
-public:
-    Donphan(int EXP);
-};
-
-class Marshtomp : public ElementPokemon_Terra {
-protected:
-    void Skillmaker() override;
-
-public:
-    Marshtomp(int EXP);
-};
-
-#endif // POKEMONCLASS_H
+#endif POKEMONCLASS_H

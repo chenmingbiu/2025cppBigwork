@@ -1,4 +1,7 @@
 #include"Pokemonclass.h"
+#include "Item.h"
+#include "Account.h"
+#include "Fight.h"
 #include<fstream>
 #include<vector>
 #include<cstring>
@@ -9,115 +12,6 @@
 #include<algorithm>
 #include"teamwork.h"
 using namespace std;
-
-class item
-{
-protected:
-    int id;
-    int price;
-    char name[30]={0};
-    char describe[1000]={0};
-public:
-    item(int a,char* b,int c,char* d):id(a),price(c)
-    {
-        strncpy(name,b,29);
-        name[29]='\0';
-        strncpy(describe,d,999);
-        describe[999]='\0';
-    }
-    int getprice()
-    {
-        return price;
-    }
-    void showitem()
-    {
-        cout<<name<<"   "<<describe<<"  ";
-    }
-};
-
-class restore_item:public item
-{
-    friend class back;
-
-protected:
-
-    int effect;
-
-public:
-    
-    restore_item(int a,char* b,int c,char* d,int e):item(a,b,c,d),effect(e){}
-
-    int geteffect()
-    {
-        return effect;
-    }
-};
-
-class non_restore_item:public item
-{
-    friend class back;
-
-protected:
-
-    int success;
-
-public:
-
-    non_restore_item(int a,char* b,int c,char* d,int e):item(a,b,c,d),success(e){}
-    
-    int getsuccess()
-    {
-        return success;
-    }
-};
-
-class back
-{
-public:
-    vector<int> amounts={1000,3,2,1,3,2,1,3,2,1};
-    item* itemlist[10] =
-    {
-    new restore_item(1000,const_cast < char*>("金币"),0,const_cast < char*>("各个大陆的流通货币"),0),
-    new restore_item(1001,const_cast < char*>("小血瓶"),30,const_cast < char*>("小型的血量回复药，可以恢复50点血量"),50),
-    new restore_item(1002,const_cast < char*>("中血瓶"),50,const_cast < char*>("中型的血量回复药，可以恢复50点血量"),100),
-    new restore_item(1003,const_cast < char*>("中血瓶"),70,const_cast < char*>("大型的血量回复药，可以恢复150点血量"),150),
-    new restore_item(1004,const_cast < char*>("小蓝瓶"),30,const_cast < char*>("小型的魔力回复药，可以恢复50点魔力"),50),
-    new restore_item(1005,const_cast < char*>("中蓝瓶"),50,const_cast < char*>("中型的魔力回复药，可以恢复50点魔力"),100),
-    new restore_item(1006,const_cast < char*>("大蓝瓶"),70,const_cast < char*>("大型的魔力回复药，可以恢复150点魔力"),150),
-    new non_restore_item(1007, const_cast<char*>("基础精灵球"), 100, const_cast<char*>("最低级的精灵球，小概率捕捉到精灵"), 20),
-    new non_restore_item(1008, const_cast<char*>("进阶精灵球"),200,const_cast<char*>("进阶的精灵球，大概率捕捉到精灵"),50),
-    new non_restore_item(1009,const_cast<char*>("大师精灵球"),300,const_cast<char*>("最高级的精灵球，必定捕捉到精灵"),100)
-    };
-
-    void showback()
-    {
-        for(int i=0;i<10;i++)
-        {
-            if(amounts[i]!=0)
-            {
-                itemlist[i]->showitem();
-                cout<<amounts[i]<<endl;
-            }
-        }
-    }
-
-    ~back() 
-    {
-        for (item* x:itemlist) 
-        {
-            delete x;
-        }
-    }
-};
-
-class Account
-{
-    friend void registeraccount();
-public:
-    char name[30]={0};
-    int account;
-    char password[30]={0};
-};
 
 int getmenuchoice() 
 {
@@ -217,18 +111,18 @@ void place(Account& tempaccount,back& backs)
                 {
                     while(true)
                     {
-                        cout<<"请选择要购买的物品"<<endl;
-                        cout<<"1:小血瓶"<<endl;
-                        cout<<"2:中血瓶"<<endl;
-                        cout<<"3:大血瓶"<<endl;
-                        cout<<"4:小魔力瓶"<<endl;
-                        cout<<"5:中魔力瓶"<<endl;
-                        cout<<"6:大魔力瓶"<<endl;
-                        cout<<"7:基础精灵球"<<endl;
-                        cout<<"8:进阶精灵球"<<endl;
-                        cout<<"9:大师精灵球"<<endl;
-                        cout<<"0:退出商店"<<endl;
-                        int choice11=getmenuchoice();
+                        cout << "请选择要购买的物品" << endl;
+                        cout << "1:小血瓶" << endl;
+                        cout << "2:中血瓶" << endl;
+                        cout << "3:大血瓶" << endl;
+                        cout << "4:小魔力瓶" << endl;
+                        cout << "5:中魔力瓶" << endl;
+                        cout << "6:大魔力瓶" << endl;
+                        cout << "7:基础精灵球" << endl;
+                        cout << "8:进阶精灵球" << endl;
+                        cout << "9:大师精灵球" << endl;
+                        cout << "0:退出商店" << endl;
+                        int choice11 = getmenuchoice();
                         if(choice11!=0)
                         {
                             int max=9999-backs.amounts[choice11];
@@ -353,207 +247,11 @@ void game_begin(Account& tempaccount,back& backs)
     }
 }
 
-// 加密函数
-string encryption(const string& text) 
-{
-    string result;
-    result.reserve(text.length());
-    for (char c:text) 
-    {
-        if (isalpha(c)) 
-        {
-            char base=isupper(c)?'A':'a';
-            char encrypted=(c-base+5)%26;
-            if (encrypted<0)encrypted+=26; 
-            encrypted+=base;
-            result+=encrypted;
-        } 
-        else 
-        {
-            result+=c; 
-        }
-    }
-    return result;
-}
-
-void registeraccount()
-{
-    Account temp;
-    back backs;
-    ifstream opf;
-    string temp_password,temp_name,x;
-
-    cout<<"1:注册账号"<<endl;
-    cout<<"0:返回主菜单"<<endl;
-    int loginChoice = getmenuchoice();
-    if(loginChoice==0) 
-    {
-        return;
-    }
-    shuru: cout<<"请输入账号(仅限数字，长度7位):"<<endl;
-    cin>>x;
-    clearInputBuffer();
-    if(x.length()!=7||!all_of(x.begin(),x.end(),::isdigit)) 
-        {
-            cout << "账号必须为7位数字！" << endl;
-            goto shuru;
-        }
-    else temp.account=stoi(x);
-    string temp_account=to_string(temp.account)+".txt";
-    opf.open(temp_account,ios::in|ios::binary);
-    bool isopen=opf.is_open();
-    opf.close();
-    if(isopen)
-    {
-        cout<<"该账号已被注册，请重新输入："<<endl;
-        goto shuru;
-    }
-    shurumima:cout<<"请输入密码："<<endl;
-    cin>>temp_password;
-    clearInputBuffer();
-    if(temp_password.length()>29)
-    {
-        cout<<"密码长度超过29，请重新输入："<<endl;
-        goto shurumima;
-    }
-    strncpy(temp.password,&encryption(temp_password)[0],29);
-    temp.password[29]='\0';
-    shurunicheng:cout<<"请输入昵称："<<endl;
-    cin>>temp_name;
-    clearInputBuffer();
-    if(temp_name.length()>29)
-    {
-        cout<<"昵称长度超过29，请重新输入："<<endl;
-        goto shurunicheng;
-    }
-    strncpy(temp.name,&temp_name[0],29);
-    temp.name[29]='\0';
-    savedata(temp,backs);
-    cout<<"注册成功，欢迎使用"<<endl;
-}
-
 void exitgame()
 {
     cout<<"欢迎下次使用！"<<endl;
     system("pause");
     exit(0);
-}
-
-void login()
-{
-    Account templog;
-    back backs;
-    int tempaccount;
-    string tempfilename,temppassword,x;
-    ifstream opf;
-
-    cout<<"1:输入账号"<<endl;
-    cout<<"0:返回主菜单"<<endl;
-    int loginChoice = getmenuchoice();
-    if(loginChoice == 0) 
-    {
-        return;
-    }
-
-    shuru1: cout<<"请输入账号："<<endl;
-    cin>>x;
-    if(x.length()!=7||!all_of(x.begin(),x.end(),::isdigit)) 
-        {
-            cout<<"账号必须为7位数字！"<<endl;
-            goto shuru1;
-        }
-    else templog.account=stoi(x);
-    clearInputBuffer();
-    tempfilename=to_string(templog.account)+".txt";
-    opf.open(tempfilename,ios::in|ios::binary);
-    bool islog=opf.is_open();
-    opf.close();
-    if(!islog)
-    {
-        cout<<"该账号未注册！"<<endl;
-        goto shuru1;
-    }
-    readdata(templog,backs);
-
-    shurumima:cout<<"请输入密码："<<endl;
-    cin>>temppassword;
-    clearInputBuffer();
-    char temp_password[30];
-    strncpy(temp_password,&encryption(temppassword)[0],29);
-    temp_password[29]='\0';
-
-    if(strcmp(templog.password,temp_password)==0)
-    cout<<"登录成功,欢迎游玩本游戏！"<<endl;
-    else 
-    {
-        cout<<"密码错误"<<endl;
-        system("pause");
-        goto shurumima;
-    }
-    game_begin(templog,backs);
-}
-
-void changepassword()
-{
-    size_t len=0;
-    ifstream test;
-    ofstream opf;
-    Account x;
-    back backs;
-    string oldpassword,newpassword,filename;
-
-    cout<<"1:修改密码"<<endl;
-    cout<<"0:返回主菜单"<<endl;
-    int loginChoice = getmenuchoice();
-    if(loginChoice == 0) 
-    {
-        return;
-    }
-
-    shuru2: cout<<"请输入账号"<<endl;
-    cin>>x.account;
-    clearInputBuffer();
-    filename=to_string(x.account)+".txt";
-    test.open(filename,ios::in|ios::binary);
-    bool isopen=test.is_open();
-    test.close();
-    if(!isopen)
-    {
-        cout<<"该账号不存在,请重新输入"<<endl;
-        goto shuru2;
-    }
-    readdata(x,backs);
-
-    shuruyuanmima:cout<<"请输入原密码:"<<endl;
-    cin>>oldpassword;
-    clearInputBuffer();
-    char old_password[30];
-    strncpy(old_password,&encryption(oldpassword)[0],29);
-    old_password[29]='\0';
-
-    shuruxinmima:cout<<"请输入新密码:"<<endl;
-    cin>>newpassword;
-    clearInputBuffer();
-    if(newpassword.length()>29)
-    {
-        cout<<"新密码长度超过29，请重新输入："<<endl;
-        goto shuruxinmima;
-    }
-    char new_password[30];
-    strncpy(new_password,&encryption(newpassword)[0],29);
-    new_password[29]='\0';
-
-    if(strcmp(old_password,x.password)==0)
-    {
-        strncpy(x.password,&encryption(newpassword)[0],30);
-        savedata(x, backs);
-        cout << "密码修改成功" << endl;
-    }
-    else
-    {
-        cout<<"原始密码输入错误,请重新输入："<<endl;
-        goto shuruyuanmima;
-    }
 }
 
 int main()

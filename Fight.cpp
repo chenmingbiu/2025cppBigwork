@@ -1,6 +1,7 @@
 
 #include "Pokemonclass.h"
 #include "Fight.h"
+#include "Item.h"
 #include <cstdlib>
 #include <string>
 #include <cmath>
