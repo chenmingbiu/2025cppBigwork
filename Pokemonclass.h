@@ -54,7 +54,10 @@ public:
     void HPadder(int);
     void MPadder(int);
     void MPreducer(int);
+    string Namegetter();
     int levelgetter();
+    int HPmaxgetter();
+    int MPmaxgetter();
     int HPgetter();
     int MPgetter();
     int ATKgetter();

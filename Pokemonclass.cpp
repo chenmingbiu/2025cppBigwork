@@ -56,7 +56,10 @@ public:
 	void HPadder(int HPadd) { HP += HPadd; if (HP > HPmax)HP = HPmax; }	//生命值回复函数
 	void MPadder(int MPadd) { MP += MPadd; if (MP > MPmax)MP = MPmax; }
 	void MPreducer(int MPred) { MP -= MPred;}
+	string Namegetter() { return name; }
 	int levelgetter() { return level; }
+	int HPmaxgetter() { return HPmax; }
+	int MPmaxgetter() { return MPmax; }
 	int HPgetter() { return HP; }
 	int MPgetter() { return MP; }
 	int ATKgetter() { return ATK; }
