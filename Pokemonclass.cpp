@@ -51,6 +51,7 @@ public:
 	Skill SkillSelector(int num) { return skill[num - 1]; }
 	int GetPokemonType() { return num; }	//获取宝可梦的种类编号
 	void InfoDisplayer() {	//宝可梦基本信息查看函数
+		cout << "宝可梦名称：" << name << endl;
 		cout << "等级：" << level << endl;
 		cout << "经验值：" << EXP << endl;
 		cout << "生命值：" << HP << " / " << HPmax << endl;
@@ -74,6 +75,7 @@ public:
 		}
 	}
 	void InfoDisplayer_Liter() {	//宝可梦预选界面使用的简要信息呈现
+		cout << "宝可梦名称：" << name << endl;
 		cout << "等级：" << level << endl;
 		cout << "生命值：" << HP << " / " << HPmax << endl;
 		cout << "能量值：" << MP << " / " << MPmax << endl;
