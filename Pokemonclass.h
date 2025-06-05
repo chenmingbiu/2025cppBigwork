@@ -56,12 +56,14 @@ public:
     void MPreducer(int);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     int levelgetter();
 >>>>>>> 新增文件添加项目文件�?
 =======
-    int levelgetter();
+=======
 >>>>>>> 新增文件添加项目文件�?
+    int levelgetter();
     int HPgetter();
     int MPgetter();
     int ATKgetter();
