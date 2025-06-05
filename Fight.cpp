@@ -20,6 +20,7 @@ int Fight_During(Pokemon& Mine, Pokemon& Enemy) {
 	Skill skill_mine = { 0 }, skill_enemy = { 0 };
 	system("cls");
 FightDuring_Start:
+	if (Win_During(Mine, Enemy)) { return 0; }
 	cout << "我方宝可梦：" << endl;
 	Mine.InfoDisplayer_Liter();
 	cout << "敌方宝可梦：" << endl;
@@ -44,7 +45,7 @@ FightDuring_Start:
 	case 3:; break;
 	case 4:; break;
 	case 5:; break;
-	case 6: { if (Fight_Escape())return 0; else { Escape_Fail(Mine, Enemy, skill_enemy); cout << "逃跑失败" << endl; goto FightDuring_Start; } };
+	case 6: { if (Fight_Escape())return 0; else { Escape_Fail(Mine, Enemy, skill_enemy);goto FightDuring_Start; } };
 	default: goto FightDuring_Start;
 	}
 	return 0;
@@ -60,20 +61,31 @@ bool Fight_Escape() {
 void Fight_Action(Pokemon& Mine, Pokemon& Enemy, Skill skill_mine, Skill skill_enemy) {
 	int damage;
 	double DEFrate;	//伤害减免率；
+	cout << "你使用了技能：" << skill_mine.name << endl;
+	cout << "敌人使用了技能：" << skill_enemy.name << endl;
 	DEFrate =Enemy.DEFgetter() * skill_enemy.DEF / (45 + Enemy.DEFgetter() * skill_enemy.DEF);	//伤害减免率=防御数值/（常数+防御数值）
 	damage = Mine.ATKgetter() * skill_mine.ATK * (1 - DEFrate);
-	Enemy.DAGmaker(damage); if (!Enemy.HPgetter())return;
+	Enemy.DAGmaker(damage); 
+	cout << "你对敌人造成了" << damage << "点伤害" << endl;
+	if (!Enemy.HPgetter()) { cout << "敌人生命值耗尽" << endl; Nextstep(); return; }
 	DEFrate = Mine.DEFgetter() * skill_mine.DEF / (45 + Mine.DEFgetter() * skill_mine.DEF);
 	damage = Enemy.ATKgetter() * skill_enemy.ATK * (1 - DEFrate);
-	Mine.DAGmaker(damage); return;
+	Mine.DAGmaker(damage); 
+	cout << "敌人对你造成了" << damage << "点伤害" << endl;
+	Nextstep();
+	return;
 }
 
 void Escape_Fail(Pokemon& Mine, Pokemon& Enemy, Skill skill_enemy) {
 	int damage;
 	double DEFrate;
+	cout << "逃跑失败" << endl;
 	DEFrate = Mine.DEFgetter()/ (45 + Mine.DEFgetter());
 	damage = Enemy.ATKgetter() * skill_enemy.ATK * (1 - DEFrate);
-	Mine.DAGmaker(damage); return;
+	Mine.DAGmaker(damage);
+	cout << "敌人对你造成了" << damage << "点伤害" << endl;
+	Nextstep();
+	return;
 }
 
 bool SkillCertify(Pokemon& Mine, Skill skill_mine) {	//技能可用性检定
@@ -108,4 +120,31 @@ ATKselect_Start:
 	default:goto ATKselect_Start;
 		break;
 	}
+}
+
+int DEFselect(Pokemon& Mine, Skill& skill_mine) {
+	int selection;
+	system("cls");
+	Mine.InfoDisplayer_Liter();
+	cout << "1. 防御技能 1：" << endl;
+	Mine.SkillDisplayer_Lite(4);
+	cout << "2. 防御技能 2：" << endl;
+	Mine.SkillDisplayer_Lite(5);
+	cout << "0. 返回" << endl;
+DEFselect_Start:
+	clearInputBuffer();
+	selection = getmenuchoice(2);
+	switch (selection)
+	{
+	case 1: { if (SkillCertify(Mine, Mine.SkillSelector(1))) { skill_mine = Mine.SkillSelector(1); return 1; } else goto DEFselect_Start; }
+	case 2: { if (SkillCertify(Mine, Mine.SkillSelector(2))) { skill_mine = Mine.SkillSelector(2); return 1; } else goto DEFselect_Start; }
+	case 0:   return 0;
+	default:goto DEFselect_Start;
+		break;
+	}
+}
+
+
+bool Win_During(Pokemon& Mine, Pokemon& Enemy) {
+	if (Mine.HPgetter() && Enemy.HPgetter())return true; else return false;
 }

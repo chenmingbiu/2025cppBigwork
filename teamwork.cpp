@@ -32,6 +32,11 @@ int getmenuchoice(int num)
     }
 }
 
+void Nextstep() {
+    cout << "请按回车或空格进入下一步" << endl;
+    while (cin)return;
+}
+
 int getnumber(int max) 
 {
     string input;

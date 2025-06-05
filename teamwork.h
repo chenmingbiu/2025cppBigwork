@@ -10,6 +10,7 @@
 
 int getmenuchoice(int);
 int getnumber(int max);
+void Nextstep();
 int RandomNumber(int);
 void clearInputBuffer();
 void savedata(Account& accounts, back& backs);
