@@ -74,18 +74,18 @@ class back
 {
 public:
     vector<int> amounts={1000,3,2,1,3,2,1,3,2,1};
-    item* itemlist[10]=
+    item* itemlist[10] =
     {
-    new restore_item(1000,"金币",0,"各个大陆的流通货币",0),
-    new restore_item(1001,"小血瓶",30,"小型的血量回复药，可以恢复50点血量",50),
-    new restore_item(1002,"中血瓶",50,"中型的血量回复药，可以恢复50点血量",100),
-    new restore_item(1003,"中血瓶",70,"大型的血量回复药，可以恢复150点血量",150),
-    new restore_item(1004,"小蓝瓶",30,"小型的魔力回复药，可以恢复50点魔力",50),
-    new restore_item(1005,"中蓝瓶",50,"中型的魔力回复药，可以恢复50点魔力",100),
-    new restore_item(1006,"大蓝瓶",70,"大型的魔力回复药，可以恢复150点魔力",150),
-    new non_restore_item(1007,"基础精灵球",100,"最低级的精灵球，小概率捕捉到精灵",20),
-    new non_restore_item(1008,"进阶精灵球",200,"进阶的精灵球，大概率捕捉到精灵",50),
-    new non_restore_item(1009,"大师精灵球",300,"最高级的精灵球，必定捕捉到精灵",100)
+    new restore_item(1000,const_cast < char*>("金币"),0,const_cast < char*>("各个大陆的流通货币"),0),
+    new restore_item(1001,const_cast < char*>("小血瓶"),30,const_cast < char*>("小型的血量回复药，可以恢复50点血量"),50),
+    new restore_item(1002,const_cast < char*>("中血瓶"),50,const_cast < char*>("中型的血量回复药，可以恢复50点血量"),100),
+    new restore_item(1003,const_cast < char*>("中血瓶"),70,const_cast < char*>("大型的血量回复药，可以恢复150点血量"),150),
+    new restore_item(1004,const_cast < char*>("小蓝瓶"),30,const_cast < char*>("小型的魔力回复药，可以恢复50点魔力"),50),
+    new restore_item(1005,const_cast < char*>("中蓝瓶"),50,const_cast < char*>("中型的魔力回复药，可以恢复50点魔力"),100),
+    new restore_item(1006,const_cast < char*>("大蓝瓶"),70,const_cast < char*>("大型的魔力回复药，可以恢复150点魔力"),150),
+    new non_restore_item(1007, const_cast<char*>("基础精灵球"), 100, const_cast<char*>("最低级的精灵球，小概率捕捉到精灵"), 20),
+    new non_restore_item(1008, const_cast<char*>("进阶精灵球"),200,const_cast<char*>("进阶的精灵球，大概率捕捉到精灵"),50),
+    new non_restore_item(1009,const_cast<char*>("大师精灵球"),300,const_cast<char*>("最高级的精灵球，必定捕捉到精灵"),100)
     };
 
     void showback()
