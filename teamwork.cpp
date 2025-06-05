@@ -13,7 +13,7 @@
 #include"teamwork.h"
 using namespace std;
 
-int getmenuchoice() 
+int getmenuchoice(int num) 
 {
     string input;
     while (true) 
@@ -23,12 +23,12 @@ int getmenuchoice()
         if (input.length()==1) 
         {
             char c = input[0];
-            if (c>='0'&&c<='9') 
+            if (c>='0'&&c<=char(num)) 
             {
                 return c-'0';
             }
         }
-        cout<<"请输0-9之间的数字"<<endl;
+        cout<<"请输入0-"<<num<<"之间的数字"<<endl;
     }
 }
 
@@ -67,12 +67,12 @@ int getnumber(int max)
     }
 }
 
-int RandomNumber(int num) {
+int RandomNumber(int num) { //生成从1到num的随机整数
     mt19937 rng(std::random_device{}());
     uniform_int_distribution<int> dist(1, num);
     int random_num = dist(rng);
     return random_num;
-}
+} 
 
 void clearInputBuffer() {
     cin.clear();
@@ -105,14 +105,14 @@ void place(Account& tempaccount,back& backs)
     cout<<"5:火山"<<endl;
     cout<<"6:原始山脉"<<endl;
     cout<<"0:家园"<<endl;
-    int choice=getmenuchoice();
+    int choice=getmenuchoice(6);
     switch(choice)
     {
         case 1:
             {
                 cout<<"1:购买物品"<<endl;
                 cout<<"0:离开商店"<<endl;
-                int choice1=getmenuchoice();
+                int choice1=getmenuchoice(1);
                 if(choice1!=1)return;
                 else
                 {
@@ -129,7 +129,7 @@ void place(Account& tempaccount,back& backs)
                         cout << "8:进阶精灵球" << endl;
                         cout << "9:大师精灵球" << endl;
                         cout << "0:退出商店" << endl;
-                        int choice11 = getmenuchoice();
+                        int choice11 = getmenuchoice(9);
                         if(choice11!=0)
                         {
                             int max=9999-backs.amounts[choice11];
@@ -215,7 +215,7 @@ void game_begin(Account& tempaccount,back& backs)
         cout<<"2:查看精灵"<<endl;
         cout<<"3:打开地图"<<endl;
         cout<<"0:退出登录"<<endl;
-        choice1=getmenuchoice();
+        choice1=getmenuchoice(3);
         switch (choice1)
         {
         case 1: backs.showback();
@@ -271,7 +271,7 @@ int main()
         cout<<"2:注册账号"<<endl;
         cout<<"3:修改密码"<<endl;
         cout<<"0:退出游戏"<<endl;
-        choice = getmenuchoice();
+        choice = getmenuchoice(3);
         switch(choice)
         {
             //登录账号

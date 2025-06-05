@@ -56,6 +56,10 @@ public:
 	void HPadder(int HPadd) { HP += HPadd; if (HP > HPmax)HP = HPmax; }	//ÉúÃüÖµ»Ø¸´º¯Êý
 	void MPadder(int MPadd) { MP += MPadd; if (MP > MPmax)MP = MPmax; }
 	void MPreducer(int MPred) { MP -= MPred;}
+<<<<<<< HEAD
+=======
+	int levelgetter() { return level; }
+>>>>>>> æ–°å¢žæ–‡ä»¶æ·»åŠ é¡¹ç›®æ–‡ä»¶ã€?
 	int HPgetter() { return HP; }
 	int MPgetter() { return MP; }
 	int ATKgetter() { return ATK; }

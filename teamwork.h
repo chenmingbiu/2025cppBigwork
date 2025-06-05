@@ -8,7 +8,7 @@
 #include <vector>
 #include <string>
 
-int getmenuchoice();
+int getmenuchoice(int);
 int getnumber(int max);
 int RandomNumber(int);
 void clearInputBuffer();

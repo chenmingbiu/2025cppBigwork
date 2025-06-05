@@ -30,7 +30,7 @@ void login()
 
     cout << "1:输入账号" << endl;
     cout << "0:返回主菜单" << endl;
-    int loginChoice = getmenuchoice();
+    int loginChoice = getmenuchoice(1);
     if (loginChoice == 0)
     {
         return;
@@ -86,7 +86,7 @@ void changepassword()
 
     cout << "1:修改密码" << endl;
     cout << "0:返回主菜单" << endl;
-    int loginChoice = getmenuchoice();
+    int loginChoice = getmenuchoice(1);
     if (loginChoice == 0)
     {
         return;
@@ -169,7 +169,7 @@ void registeraccount()
 
     cout << "1:注册账号" << endl;
     cout << "0:返回主菜单" << endl;
-    int loginChoice = getmenuchoice();
+    int loginChoice = getmenuchoice(1);
     if (loginChoice == 0)
     {
         return;
